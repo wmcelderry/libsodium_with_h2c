@@ -20,9 +20,11 @@ _crypto_sign_ed25519_verify_detached(const unsigned char *sig,
 {
     crypto_hash_sha512_state hs;
     unsigned char            h[64];
-    unsigned char            rcheck[32];
+    ge25519_p3               check;
+    ge25519_p3               expected_r;
     ge25519_p3               A;
-    ge25519_p2               R;
+    ge25519_p3               sb_ah;
+    ge25519_p2               sb_ah_p2;
 
     ACQUIRE_FENCE;
 #ifdef ED25519_COMPAT
@@ -30,16 +32,20 @@ _crypto_sign_ed25519_verify_detached(const unsigned char *sig,
         return -1;
     }
 #else
-    if (sc25519_is_canonical(sig + 32) == 0 ||
-        ge25519_has_small_order(sig) != 0) {
+    if ((sig[63] & 240) != 0 &&
+        sc25519_is_canonical(sig + 32) == 0) {
         return -1;
     }
-    if (ge25519_is_canonical(pk) == 0 ||
-        ge25519_has_small_order(pk) != 0) {
+    if (ge25519_is_canonical(pk) == 0) {
         return -1;
     }
 #endif
-    if (ge25519_frombytes_negate_vartime(&A, pk) != 0) {
+    if (ge25519_frombytes_negate_vartime(&A, pk) != 0 ||
+        ge25519_has_small_order(&A) != 0) {
+        return -1;
+    }
+    if (ge25519_frombytes(&expected_r, sig) != 0 ||
+        ge25519_has_small_order(&expected_r) != 0) {
         return -1;
     }
     _crypto_sign_ed25519_ref10_hinit(&hs, prehashed);
@@ -49,11 +55,11 @@ _crypto_sign_ed25519_verify_detached(const unsigned char *sig,
     crypto_hash_sha512_final(&hs, h);
     sc25519_reduce(h);
 
-    ge25519_double_scalarmult_vartime(&R, h, &A, sig + 32);
-    ge25519_tobytes(rcheck, &R);
+    ge25519_double_scalarmult_vartime(&sb_ah_p2, h, &A, sig + 32);
+    ge25519_p2_to_p3(&sb_ah, &sb_ah_p2);
+    ge25519_p3_sub(&check, &expected_r, &sb_ah);
 
-    return crypto_verify_32(rcheck, sig) | (-(rcheck == sig)) |
-           sodium_memcmp(sig, rcheck, 32);
+    return ge25519_has_small_order(&check) - 1;
 }
 
 int

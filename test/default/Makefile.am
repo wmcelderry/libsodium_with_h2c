@@ -30,6 +30,7 @@ EXTRA_DIST = \
 	codecs.exp \
 	core_ed25519.exp \
 	core_keccak1600.exp \
+	core_ed25519_h2c.exp \
 	core_ristretto255_h2c.exp \
 	core_ristretto255.exp \
 	core1.exp \
@@ -119,6 +120,7 @@ DISTCLEANFILES = \
 	codecs.res \
 	core_ed25519.res \
 	core_keccak1600.res \
+	core_ed25519_h2c.res \
 	core_ristretto255_h2c.res \
 	core_ristretto255.res \
 	core1.res \
@@ -358,6 +360,9 @@ core_ed25519_LDADD        = $(TESTS_LDADD)
 core_keccak1600_SOURCE    = cmptest.h core_keccak1600.c
 core_keccak1600_LDADD     = $(TESTS_LDADD)
 
+core_ed25519_h2c_SOURCE   = cmptest.h core_ed25519_h2c.c
+core_ed25519_h2c_LDADD    = $(TESTS_LDADD)
+
 core_ristretto255_h2c_SOURCE   = cmptest.h core_ristretto255_h2c.c
 core_ristretto255_h2c_LDADD    = $(TESTS_LDADD)
 
@@ -547,6 +552,7 @@ xof_turboshake256_LDADD   = $(TESTS_LDADD)
 if !MINIMAL
 TESTS_TARGETS += \
 	core_ed25519 \
+	core_ed25519_h2c \
 	core_ristretto255_h2c \
 	core_ristretto255 \
 	kdf_hkdf \

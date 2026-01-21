@@ -28,16 +28,12 @@ crypto_core_ristretto255_add(unsigned char *r,
                              const unsigned char *p, const unsigned char *q)
 {
     ge25519_p3     p_p3, q_p3, r_p3;
-    ge25519_p1p1   r_p1p1;
-    ge25519_cached q_cached;
 
     if (ristretto255_frombytes(&p_p3, p) != 0 ||
         ristretto255_frombytes(&q_p3, q) != 0) {
         return -1;
     }
-    ge25519_p3_to_cached(&q_cached, &q_p3);
-    ge25519_add(&r_p1p1, &p_p3, &q_cached);
-    ge25519_p1p1_to_p3(&r_p3, &r_p1p1);
+    ge25519_p3_add(&r_p3, &p_p3, &q_p3);
     ristretto255_p3_tobytes(r, &r_p3);
 
     return 0;
@@ -48,16 +44,12 @@ crypto_core_ristretto255_sub(unsigned char *r,
                              const unsigned char *p, const unsigned char *q)
 {
     ge25519_p3     p_p3, q_p3, r_p3;
-    ge25519_p1p1   r_p1p1;
-    ge25519_cached q_cached;
 
     if (ristretto255_frombytes(&p_p3, p) != 0 ||
         ristretto255_frombytes(&q_p3, q) != 0) {
         return -1;
     }
-    ge25519_p3_to_cached(&q_cached, &q_p3);
-    ge25519_sub(&r_p1p1, &p_p3, &q_cached);
-    ge25519_p1p1_to_p3(&r_p3, &r_p1p1);
+    ge25519_p3_sub(&r_p3, &p_p3, &q_p3);
     ristretto255_p3_tobytes(r, &r_p3);
 
     return 0;
@@ -168,6 +160,38 @@ crypto_core_ristretto255_scalar_reduce(unsigned char *r,
                                        const unsigned char *s)
 {
     crypto_core_ed25519_scalar_reduce(r, s);
+}
+
+int
+crypto_core_ristretto255_scalar_is_canonical(const unsigned char *s)
+{
+    return sc25519_is_canonical(s);
+}
+
+#define HASH_SC_L 48U
+
+int
+crypto_core_ristretto255_scalar_from_string(unsigned char *s,
+                                            const unsigned char *ctx, size_t ctx_len,
+                                            const unsigned char *msg, size_t msg_len,
+                                            int hash_alg)
+{
+    unsigned char h[crypto_core_ristretto255_NONREDUCEDSCALARBYTES];
+    unsigned char h_be[HASH_SC_L];
+    size_t        i;
+
+    if (core_h2c_string_to_hash(h_be, sizeof h_be, ctx, ctx_len, msg, msg_len,
+                                hash_alg) != 0) {
+        return -1;
+    }
+    COMPILER_ASSERT(sizeof h >= sizeof h_be);
+    for (i = 0U; i < HASH_SC_L; i++) {
+        h[i] = h_be[HASH_SC_L - 1U - i];
+    }
+    memset(&h[i], 0, (sizeof h) - i);
+    crypto_core_ristretto255_scalar_reduce(s, h);
+
+    return 0;
 }
 
 size_t

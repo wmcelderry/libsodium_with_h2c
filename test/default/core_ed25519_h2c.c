@@ -65,6 +65,9 @@ main(void)
     size_t         i, j;
     size_t         oversized_ctx_len = 500U;
 
+    const char *test_ctx_str1 = "QUUX-V01-CS02-with-edwards25519_XMD:SHA-512_ELL2_NU_";
+    const char *test_ctx_str2 = "QUUX-V01-CS02-with-edwards25519_XMD:SHA-512_ELL2_RO_";
+
     expected_yr = (unsigned char *) sodium_malloc(crypto_core_ed25519_BYTES);
     expected_y  = (unsigned char *) sodium_malloc(crypto_core_ed25519_BYTES);
     y           = (unsigned char *) sodium_malloc(crypto_core_ed25519_BYTES);
@@ -79,14 +82,14 @@ main(void)
         }
         if (test_data[i].ro == 0) {
             if (crypto_core_ed25519_from_string(
-                    y, "QUUX-V01-CS02-with-edwards25519_XMD:SHA-512_ELL2_NU_",
+                    y, test_ctx_str1, strlen(test_ctx_str1),
                     (const unsigned char *) test_data[i].msg,
                     strlen(test_data[i].msg), H2CHASH) != 0) {
                 printf("crypto_core_ed25519_from_string() failed\n");
             }
         } else {
             if (crypto_core_ed25519_from_string_ro(
-                    y, "QUUX-V01-CS02-with-edwards25519_XMD:SHA-512_ELL2_RO_",
+                    y, test_ctx_str2, strlen(test_ctx_str2),
                     (const unsigned char *) test_data[i].msg,
                     strlen(test_data[i].msg), H2CHASH) != 0) {
                 printf("crypto_core_ed25519_from_string_ro() failed\n");
@@ -103,12 +106,12 @@ main(void)
         }
     }
 
-    if (crypto_core_ed25519_from_string(y, NULL, (const unsigned char *) "msg",
+    if (crypto_core_ed25519_from_string(y, NULL, 0, (const unsigned char *) "msg",
                                         3U, H2CHASH) != 0 ||
-        crypto_core_ed25519_from_string(y, "", guard_page, 0U, H2CHASH) != 0 ||
+        crypto_core_ed25519_from_string(y, "", 0, guard_page, 0U, H2CHASH) != 0 ||
         crypto_core_ed25519_from_string_ro(
-            y, NULL, (const unsigned char *) "msg", 3U, H2CHASH) != 0 ||
-        crypto_core_ed25519_from_string_ro(y, "", guard_page, 0U,
+            y, NULL, 0, (const unsigned char *) "msg", 3U, H2CHASH) != 0 ||
+        crypto_core_ed25519_from_string_ro(y, "", 0, guard_page, 0U,
                                            H2CHASH) != 0) {
         printf("Failed with empty parameters");
     }
@@ -116,13 +119,13 @@ main(void)
     oversized_ctx = (char *) sodium_malloc(oversized_ctx_len);
     memset(oversized_ctx, 'X', oversized_ctx_len - 1U);
     oversized_ctx[oversized_ctx_len - 1U] = 0;
-    crypto_core_ed25519_from_string(y, oversized_ctx,
+    crypto_core_ed25519_from_string(y, oversized_ctx, strlen(oversized_ctx),
                                     (const unsigned char *) "msg", 3U,
                                     H2CHASH);
     sodium_bin2hex(y_hex, crypto_core_ed25519_BYTES * 2U + 1U, y,
                    crypto_core_ed25519_BYTES);
     printf("NU with oversized context: %s\n", y_hex);
-    crypto_core_ed25519_from_string_ro(y, oversized_ctx,
+    crypto_core_ed25519_from_string_ro(y, oversized_ctx, strlen(oversized_ctx),
                                        (const unsigned char *) "msg", 3U,
                                        H2CHASH);
     sodium_bin2hex(y_hex, crypto_core_ed25519_BYTES * 2U + 1U, y,

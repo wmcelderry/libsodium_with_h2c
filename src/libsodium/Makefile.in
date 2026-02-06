@@ -144,7 +144,6 @@ target_triplet = @target@
 @MINIMAL_FALSE@	crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305.c \
 @MINIMAL_FALSE@	crypto_shorthash/siphash24/shorthash_siphashx24.c \
 @MINIMAL_FALSE@	crypto_shorthash/siphash24/ref/shorthash_siphashx24_ref.c \
-@MINIMAL_FALSE@	crypto_sign/ed25519/ref10/obsolete.c \
 @MINIMAL_FALSE@	crypto_stream/salsa2012/ref/stream_salsa2012_ref.c \
 @MINIMAL_FALSE@	crypto_stream/salsa2012/stream_salsa2012.c \
 @MINIMAL_FALSE@	crypto_stream/salsa208/ref/stream_salsa208_ref.c \
@@ -427,7 +426,6 @@ am__libsodium_la_SOURCES_DIST =  \
 	crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305.c \
 	crypto_shorthash/siphash24/shorthash_siphashx24.c \
 	crypto_shorthash/siphash24/ref/shorthash_siphashx24_ref.c \
-	crypto_sign/ed25519/ref10/obsolete.c \
 	crypto_stream/salsa2012/ref/stream_salsa2012_ref.c \
 	crypto_stream/salsa2012/stream_salsa2012.c \
 	crypto_stream/salsa208/ref/stream_salsa208_ref.c \
@@ -456,7 +454,6 @@ am__objects_1 =
 @MINIMAL_FALSE@	crypto_secretbox/xchacha20poly1305/libsodium_la-secretbox_xchacha20poly1305.lo \
 @MINIMAL_FALSE@	crypto_shorthash/siphash24/libsodium_la-shorthash_siphashx24.lo \
 @MINIMAL_FALSE@	crypto_shorthash/siphash24/ref/libsodium_la-shorthash_siphashx24_ref.lo \
-@MINIMAL_FALSE@	crypto_sign/ed25519/ref10/libsodium_la-obsolete.lo \
 @MINIMAL_FALSE@	crypto_stream/salsa2012/ref/libsodium_la-stream_salsa2012_ref.lo \
 @MINIMAL_FALSE@	crypto_stream/salsa2012/libsodium_la-stream_salsa2012.lo \
 @MINIMAL_FALSE@	crypto_stream/salsa208/ref/libsodium_la-stream_salsa208_ref.lo \
@@ -704,7 +701,6 @@ am__depfiles_remade = crypto_aead/aegis128l/$(DEPDIR)/libaesni_la-aegis128l_aesn
 	crypto_sign/$(DEPDIR)/libsodium_la-crypto_sign.Plo \
 	crypto_sign/ed25519/$(DEPDIR)/libsodium_la-sign_ed25519.Plo \
 	crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-keypair.Plo \
-	crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-obsolete.Plo \
 	crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-open.Plo \
 	crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-sign.Plo \
 	crypto_stream/$(DEPDIR)/libsodium_la-crypto_stream.Plo \
@@ -2193,9 +2189,6 @@ crypto_shorthash/siphash24/libsodium_la-shorthash_siphashx24.lo:  \
 crypto_shorthash/siphash24/ref/libsodium_la-shorthash_siphashx24_ref.lo:  \
 	crypto_shorthash/siphash24/ref/$(am__dirstamp) \
 	crypto_shorthash/siphash24/ref/$(DEPDIR)/$(am__dirstamp)
-crypto_sign/ed25519/ref10/libsodium_la-obsolete.lo:  \
-	crypto_sign/ed25519/ref10/$(am__dirstamp) \
-	crypto_sign/ed25519/ref10/$(DEPDIR)/$(am__dirstamp)
 crypto_stream/salsa2012/ref/$(am__dirstamp):
 	@$(MKDIR_P) crypto_stream/salsa2012/ref
 	@: > crypto_stream/salsa2012/ref/$(am__dirstamp)
@@ -2580,7 +2573,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@crypto_sign/$(DEPDIR)/libsodium_la-crypto_sign.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto_sign/ed25519/$(DEPDIR)/libsodium_la-sign_ed25519.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-keypair.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-obsolete.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-open.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-sign.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto_stream/$(DEPDIR)/libsodium_la-crypto_stream.Plo@am__quote@ # am--include-marker
@@ -3533,13 +3525,6 @@ crypto_shorthash/siphash24/ref/libsodium_la-shorthash_siphashx24_ref.lo: crypto_
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsodium_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o crypto_shorthash/siphash24/ref/libsodium_la-shorthash_siphashx24_ref.lo `test -f 'crypto_shorthash/siphash24/ref/shorthash_siphashx24_ref.c' || echo '$(srcdir)/'`crypto_shorthash/siphash24/ref/shorthash_siphashx24_ref.c
 
-crypto_sign/ed25519/ref10/libsodium_la-obsolete.lo: crypto_sign/ed25519/ref10/obsolete.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsodium_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT crypto_sign/ed25519/ref10/libsodium_la-obsolete.lo -MD -MP -MF crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-obsolete.Tpo -c -o crypto_sign/ed25519/ref10/libsodium_la-obsolete.lo `test -f 'crypto_sign/ed25519/ref10/obsolete.c' || echo '$(srcdir)/'`crypto_sign/ed25519/ref10/obsolete.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-obsolete.Tpo crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-obsolete.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='crypto_sign/ed25519/ref10/obsolete.c' object='crypto_sign/ed25519/ref10/libsodium_la-obsolete.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsodium_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o crypto_sign/ed25519/ref10/libsodium_la-obsolete.lo `test -f 'crypto_sign/ed25519/ref10/obsolete.c' || echo '$(srcdir)/'`crypto_sign/ed25519/ref10/obsolete.c
-
 crypto_stream/salsa2012/ref/libsodium_la-stream_salsa2012_ref.lo: crypto_stream/salsa2012/ref/stream_salsa2012_ref.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsodium_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT crypto_stream/salsa2012/ref/libsodium_la-stream_salsa2012_ref.lo -MD -MP -MF crypto_stream/salsa2012/ref/$(DEPDIR)/libsodium_la-stream_salsa2012_ref.Tpo -c -o crypto_stream/salsa2012/ref/libsodium_la-stream_salsa2012_ref.lo `test -f 'crypto_stream/salsa2012/ref/stream_salsa2012_ref.c' || echo '$(srcdir)/'`crypto_stream/salsa2012/ref/stream_salsa2012_ref.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) crypto_stream/salsa2012/ref/$(DEPDIR)/libsodium_la-stream_salsa2012_ref.Tpo crypto_stream/salsa2012/ref/$(DEPDIR)/libsodium_la-stream_salsa2012_ref.Plo
@@ -4226,7 +4211,6 @@ distclean: distclean-recursive
 	-rm -f crypto_sign/$(DEPDIR)/libsodium_la-crypto_sign.Plo
 	-rm -f crypto_sign/ed25519/$(DEPDIR)/libsodium_la-sign_ed25519.Plo
 	-rm -f crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-keypair.Plo
-	-rm -f crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-obsolete.Plo
 	-rm -f crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-open.Plo
 	-rm -f crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-sign.Plo
 	-rm -f crypto_stream/$(DEPDIR)/libsodium_la-crypto_stream.Plo
@@ -4408,7 +4392,6 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f crypto_sign/$(DEPDIR)/libsodium_la-crypto_sign.Plo
 	-rm -f crypto_sign/ed25519/$(DEPDIR)/libsodium_la-sign_ed25519.Plo
 	-rm -f crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-keypair.Plo
-	-rm -f crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-obsolete.Plo
 	-rm -f crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-open.Plo
 	-rm -f crypto_sign/ed25519/ref10/$(DEPDIR)/libsodium_la-sign.Plo
 	-rm -f crypto_stream/$(DEPDIR)/libsodium_la-crypto_stream.Plo
